@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui">
+
+
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="corpo">
+
+            <div class="container">
+
+                <h:form class="form-group">
+                    <b:panelGrid columns="2" colSpans="2,10" size="xs"  >
+                        <h:outputLabel value="Filme: "/>
+                        <b:inputText value="#{filmeService.filmebean.titulo}" />
+                        <h:outputLabel value="Gênero: "/>
+                        <b:inputText value="#{filmeService.filmebean.genero}" />
+                        <h:outputLabel value="Ano: "/>
+                        <b:inputText  value="#{filmeService.filmebean.ano}" />
+                        <h:outputLabel value="Preço: "/>
+                        <b:inputText value="#{filmeService.filmebean.valor}" />
+                    </b:panelGrid>
+                    <b:buttonGroup>
+                        <b:commandButton look="success" value="Salvar"  action="#{filmeService.salvarFilme()}" />
+                        <b:commandButton look="danger" value="Cancelar" action="#{filmes}"  />
+                    </b:buttonGroup>
+                </h:form>
+
+            </div>
+
+
+
+
+        </ui:define>
+    </ui:composition>
+
+
+</html>
+
