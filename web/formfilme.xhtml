@@ -5,8 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:b="http://bootsfaces.net/ui">
 
-
-
+    
     <ui:composition template="/template.xhtml">
         <ui:define name="corpo">
 
@@ -24,16 +23,19 @@
                         <b:inputText value="#{filmeService.filmebean.valor}" />
                     </b:panelGrid>
                     <b:buttonGroup>
-                        <b:commandButton look="success" value="Salvar"  action="#{filmeService.salvarFilme()}" />
-                        <b:commandButton look="danger" value="Atualizar" action="#{filmeService.atualizarFilme()}"  />
+                        <b:commandButton look="success" value="Salvar"  action="#{filmeService.salvarFilme()}" 
+                                         rendered="#{filmeService.atualiza == false}" />
+                        
+                        <b:commandButton look="warning" value="Atualizar" action="#{filmeService.atualizarFilme()}" 
+                                         rendered="#{filmeService.atualiza == true}"  /> 
+                        <b:commandButton look="danger" value="Cancelar" action="#{filmeService.cancelaAtualiza()}" 
+                                         rendered="#{filmeService.atualiza == true}"  /> 
                     </b:buttonGroup>
                 </h:form>
 
             </div>
 
-
-
-
+            
         </ui:define>
     </ui:composition>
 

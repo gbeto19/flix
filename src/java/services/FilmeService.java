@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -20,10 +19,13 @@ public class FilmeService {
     private String filtro;
     private boolean atualiza = false;
     
+    
      
     
     public FilmeService() {
+       atualiza = false;
         listarFilmes();
+        
     }
 
     // METODO SALVAR FILME
@@ -71,11 +73,20 @@ public class FilmeService {
 
     // CAPTURAR FILME
     public String capturarFilme(Filme f) {
+        atualiza = true;
         setFilmebean(f);
         return "formfilme";
 
     }
 
+    // METODO BOTÃO CANCELAR ATUALIZAÇÃO 
+    public String cancelaAtualiza(){
+       setFilmebean(new Filme());
+        atualiza = false;
+        return "Consulta";
+    }
+    
+    
     // METODO ATUALIZAR FILMES
     public String atualizarFilme() {
         Session sesAutaliza = HibernateUtil.getSessionFactory().openSession();
@@ -97,6 +108,7 @@ public class FilmeService {
            return null;       
     }
 
+    
     //METODO FILTRAR POR NOME
     public void buscaFilme(){
     
@@ -142,5 +154,7 @@ public class FilmeService {
     public void setAtualiza(boolean atualiza) {
         this.atualiza = atualiza;
     }
+
+
 
 }
