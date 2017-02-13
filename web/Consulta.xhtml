@@ -16,6 +16,14 @@
                 <div class="container">
 
                     <b:form>
+
+                        <b:panelGrid columns="2">
+                            <h:inputText class="form-control" value="#{filmeService.filtro}" /> 
+                            <b:commandButton value="Buscar" class="btn btn-primary" action="#{filmeService.buscaFilme()}" />
+                        </b:panelGrid>
+
+                        <br></br>
+
                         <b:dataTable value="#{filmeService.listaFilmes}" var="f">
                             <b:dataTableColumn value="#{f.titulo}" />
                             <b:dataTableColumn value="#{f.genero}" />
@@ -24,7 +32,7 @@
                             <b:dataTableColumn>
                                 <h:commandLink  value="Excluir"   action="#{filmeService.excluirFilmes(f)}"/> ||  
                                 <h:commandLink  value="Editar"   action="#{filmeService.capturarFilme(f)}"/>
-                                
+
                             </b:dataTableColumn> 
                         </b:dataTable>
                     </b:form>

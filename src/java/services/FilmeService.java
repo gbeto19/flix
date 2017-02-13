@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import util.HibernateUtil;
 
 @SessionScoped
@@ -16,7 +17,10 @@ public class FilmeService {
 
     private Filme filmebean = new Filme();
     private List<Filme> listaFilmes = new ArrayList<>();
-
+    private String filtro;
+    private boolean atualiza = false;
+    
+     
     
     public FilmeService() {
         listarFilmes();
@@ -29,18 +33,21 @@ public class FilmeService {
 
         try {
             trasaSalva.begin();
-            sessaoSalva.save(getFilmebean());
+            sessaoSalva.save(filmebean);
             trasaSalva.commit();
-
+            listarFilmes();
+            return "Consulta";
+             
         } catch (Exception e) {
         } finally {
+    
             sessaoSalva.close();
             
         }
-            return "Consulta";
+       return null;
     }
+    
     // METODO LISTAR FILMES
-
     public void listarFilmes() {
         Session sessaoLista = HibernateUtil.getSessionFactory().openSession();
         listaFilmes = sessaoLista.createCriteria(Filme.class).list();
@@ -80,16 +87,29 @@ public class FilmeService {
             tranAtualiza.commit();
             setFilmebean(new Filme());
             
+             return "Consulta";
         } catch (Exception e) {
         } finally {
             
-            sesAutaliza.close();
+          sesAutaliza.close();
            
         }
-       
-            return "Consulta";
+           return null;       
     }
 
+    //METODO FILTRAR POR NOME
+    public void buscaFilme(){
+    
+    Session sesBuscar = HibernateUtil.getSessionFactory().openSession();
+    listaFilmes = sesBuscar.createCriteria(Filme.class).add(Restrictions.eq("titulo",filtro)).list();
+        
+        if(listaFilmes.isEmpty()){
+                listarFilmes();
+        }
+    
+    }
+    
+    
     // GET AND SET
     public Filme getFilmebean() {
         return filmebean;
@@ -105,6 +125,22 @@ public class FilmeService {
 
     public void setListaFilmes(List<Filme> listaFilmes) {
         this.listaFilmes = listaFilmes;
+    }
+
+    public String getFiltro() {
+        return filtro;
+    }
+   
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
+
+    public boolean isAtualiza() {
+        return atualiza;
+    }
+
+    public void setAtualiza(boolean atualiza) {
+        this.atualiza = atualiza;
     }
 
 }
